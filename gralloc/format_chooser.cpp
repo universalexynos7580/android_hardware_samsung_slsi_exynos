@@ -26,8 +26,9 @@
 #define GENERAL_UI (GRALLOC_USAGE_HW_TEXTURE | GRALLOC_USAGE_HW_COMPOSER)
 
 /* It's for compression check format, width, usage*/
-int check_for_compression(int w, int h, int format, int usage)
+int check_for_compression(int w __unused, int h __unused, int format __unused, int usage __unused)
 {
+#ifndef TARGET_SOC_EXYNOS7580
 	char value[256];
 	int afbc_prop;
 
@@ -62,6 +63,9 @@ int check_for_compression(int w, int h, int format, int usage)
 			return 0;
 	}
 
+#else
+	return 0;
+#endif
 }
 
 uint64_t gralloc_select_format(int req_format, int usage, int is_compressible)
@@ -93,7 +97,7 @@ uint64_t gralloc_select_format(int req_format, int usage, int is_compressible)
 #endif
 	new_format |= GRALLOC_ARM_INTFMT_AFBC;
 
-	ALOGD("Returned iterated format: 0x%llX", new_format);
+	ALOGD("Returned iterated format: 0x%llX", (long long)new_format);
 
 	return new_format;
 }
