@@ -102,7 +102,7 @@ class ExynosMPP {
         int                             mS3DMode;
         bool                            mDoubleOperation;
         android::List<buffer_handle_t > mFreedBuffers;
-        BufferFreeThread                *mBufferFreeThread;
+        android::sp<BufferFreeThread>   mBufferFreeThread;
         android::Mutex                  mMutex;
         size_t                          mNumAvailableDstBuffers;
 

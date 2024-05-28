@@ -52,7 +52,7 @@ ExynosMPP::ExynosMPP(ExynosDisplay *display, int gscIndex)
     mppFact = NULL;
     libmpp = NULL;
     mDoubleOperation = false;
-    mBufferFreeThread = new BufferFreeThread(this);
+    mBufferFreeThread = android::sp<BufferFreeThread>::make(this);
     mBufferFreeThread->mRunning = true;
     mBufferFreeThread->run("MPPThread");
 }
@@ -62,7 +62,7 @@ ExynosMPP::~ExynosMPP()
     if (mBufferFreeThread != NULL) {
         mBufferFreeThread->mRunning = false;
         mBufferFreeThread->requestExitAndWait();
-        delete mBufferFreeThread;
+        mBufferFreeThread = NULL;
     }
 }
 
